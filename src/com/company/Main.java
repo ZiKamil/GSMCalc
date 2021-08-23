@@ -80,17 +80,32 @@ public class Main {
     }
     public static void getInfoByType(String[] arr, int type){
         ArrayList<String> list = new ArrayList<>();
+        String carMileage="";
+        String sortCarMileage="";
         for(int i=0; i<arr.length; i++){
             if( Character.forDigit(type,16) == arr[i].charAt(1)){
-                for(int j=0; j<list.size(); j++){
-                    if(list.get(j).charAt(5)==arr[i].charAt(5)){
-                        System.out.println("list");
-                    }
-                    else{
+                if (list.size()!=0){
+                    for(int j=0; j<list.size(); j++){
+                        if(list.get(j).charAt(5)==arr[i].charAt(5)){
+                            if(arr[i].lastIndexOf('-')==6){
+                                carMileage=arr[i].substring(7);
+                            }
+                            else {
+                                char [] mileage = new char[arr[i].lastIndexOf('-')-7];
+                                arr[i].getChars(7,arr[i].lastIndexOf('-'), mileage, 0);
+                                carMileage = String.valueOf(mileage);
+                            }
 
+                            list.set(j, "C"+type+"00"+"_"+arr[i].charAt(5)+"-"+carMileage);
+                        }
+                        else{
+                            list.add(arr[i]);
+                        }
                     }
                 }
-                list.add(arr[i]);
+                else {
+                    list.add(arr[i]);
+                }
             }
         }
         System.out.println(list);
