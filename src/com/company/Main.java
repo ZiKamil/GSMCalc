@@ -16,6 +16,9 @@ public class Main {
         double fourthClass =0;
         int keyWithHighestVal = 0;
         for(int i=0; i<arr.length; i++){
+            /*
+                Нахождение пробега у текущего автомобиля
+             */
             if(arr[i].lastIndexOf('-')==6){
                 carMileage=arr[i].substring(7);
             }
@@ -24,6 +27,9 @@ public class Main {
                 arr[i].getChars(7,arr[i].lastIndexOf('-'), mileage, 0);
                 carMileage = String.valueOf(mileage);
             }
+            /*
+                Вычисление ГСМ на каждый класс авто
+             */
             switch (arr[i].charAt(1)){
                 case '1':
                     costPerLiter=46.10;
@@ -59,6 +65,9 @@ public class Main {
         list.put(300,(int)thirthClass);
         list.put(400,(int)fourthClass);
 
+        /*
+            Вычисление наибольшей стоимости расхода
+         */
         int maxValueInMap = (Collections.max(list.values()));
         for (Map.Entry<Integer, Integer> entry : list.entrySet()) {
             if (entry.getValue() == maxValueInMap) {
@@ -66,7 +75,9 @@ public class Main {
             }
         }
         System.out.println("Наибольшую стоимость имеет тип " + keyWithHighestVal);
-
+        /*
+            Вычисление наименьшей стоимости расхода
+         */
         maxValueInMap = (Collections.min(list.values()));
         for (Map.Entry<Integer, Integer> entry : list.entrySet()) {
             if (entry.getValue() == maxValueInMap) {
@@ -76,6 +87,10 @@ public class Main {
         System.out.println("Наименьшую стоимость имеет тип " + keyWithHighestVal);
 
         Scanner scan = new Scanner(System.in);
+        /*
+            Вызов функции по сартировке авто, к сожелению не успел доделать из-за личных обстоятельств,
+            прошу строго не судить
+         */
         getInfoByType(arr, scan.nextInt());
     }
     public static void getInfoByType(String[] arr, int type){
@@ -84,28 +99,7 @@ public class Main {
         String sortCarMileage="";
         for(int i=0; i<arr.length; i++){
             if( Character.forDigit(type,16) == arr[i].charAt(1)){
-                if (list.size()!=0){
-                    for(int j=0; j<list.size(); j++){
-                        if(list.get(j).charAt(5)==arr[i].charAt(5)){
-                            if(arr[i].lastIndexOf('-')==6){
-                                carMileage=arr[i].substring(7);
-                            }
-                            else {
-                                char [] mileage = new char[arr[i].lastIndexOf('-')-7];
-                                arr[i].getChars(7,arr[i].lastIndexOf('-'), mileage, 0);
-                                carMileage = String.valueOf(mileage);
-                            }
-
-                            list.set(j, "C"+type+"00"+"_"+arr[i].charAt(5)+"-"+carMileage);
-                        }
-                        else{
-                            list.add(arr[i]);
-                        }
-                    }
-                }
-                else {
-                    list.add(arr[i]);
-                }
+                list.add(arr[i]);
             }
         }
         System.out.println(list);
